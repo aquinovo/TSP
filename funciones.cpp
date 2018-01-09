@@ -12,21 +12,32 @@
 #include <set>
 
 using namespace std;
-vector <int> crear_solucion(map<int, pair<int,int> > entrada, map< pair<int,int>,  pair<float,float> > distancias, int num_nodes){
-  vector <int> nodos_disponibles;
+
+vector <float> evualuar_movimientos( vector <int> movimiento_posible,vector <int> solucion,map<int, pair<int,int> > entrada, map< pair<int,int>,  pair<float,float> > distancias, int nodo, int alfa, int beta){
+      
+      //obtener la sumatoria del recorrido total    
+}
+
+vector <int> hormiga(map<int, pair<int,int> > entrada, map< pair<int,int>,  pair<float,float> > distancias, int num_nodes, int alfa, int beta){
+  vector <int> movimiento_posible;
   vector <int> solucion;
-  int nodo;
+  int nodo,pos;
 
   for (int i = 0; i < num_nodes; ++i){
-    nodos_disponibles.push_back(i+1);
+    movimiento_posible.push_back(i+1);
   }
 
+  pos=rand() % movimiento_posible.size();
+  nodo=movimiento_posible[pos];
+  movimiento_posible.erase (movimiento_posible.begin()+pos);
+  
+  solucion.push_back(nodo);
 
-  while( nodos_disponibles.size()>=0 ){
-    nodo=rand()%nodos_disponibles.size();
-    solucion.push_back(nodos_disponibles[nodo]);
-    nodos_disponibles.erase(nodos_disponibles.begin()+nodo);
-  }
+  evualuar_movimientos(movimiento_posible,solucion,entrada, distancias, nodo,alfa,beta);
+
+  
+
+
 
   return solucion;
 }

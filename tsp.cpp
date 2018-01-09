@@ -7,6 +7,7 @@ int main() {
     pair<float,float> valores;
     map<int, pair<int,int> > entrada;
     map< pair<int,int>, pair<float,float> > distancias;
+    srand (time(NULL));
  
     cin >> num_nodes;
 
@@ -28,16 +29,7 @@ int main() {
 		}	
 	}
 
-	for (int i = 1; i < 2; i++){
-		for (int j = i+1; j < 10; j++){
-			 coordenada1.first=i; coordenada1.second=j; 
-             cout<<distancias[coordenada1].first<<" -> "<<distancias[coordenada1].second<<endl;
-		}
-	}	
-
-    crear_solucion(entrada,distancias,num_nodes);
-
-
+    hormiga(entrada,distancias,num_nodes,1,0.5);
 	return 0;
 }
 
