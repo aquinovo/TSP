@@ -4,9 +4,9 @@
 int main() {
     int num_nodes,node;
     pair<int,int> coordenada,relacion1,relacion2;
-    pair<float,float> valores;
+    pair<double,double> valores;
     map<int, pair<int,int> > entrada;
-    map< pair<int,int>, pair<float,float> > distancias;
+    map< pair<int,int>, pair<double,double> > distancias;
     srand (time(NULL));
  
     cin >> num_nodes;
@@ -28,7 +28,7 @@ int main() {
 		}	
 	}
     
-    hormiga(distancias,num_nodes,1,0.5,5);
+    hormiga(distancias,num_nodes,1,1,5,0.10,100);
 	return 0;
 }
 
