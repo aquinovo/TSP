@@ -1,5 +1,47 @@
 #include "funciones.cpp"
 
+vector <int> hormiga(map< pair<int,int>,  pair<double,double> > distancias, int num_nodes, double alfa, double beta, int num_hormigas, double ro,int num_iteraciones){
+  vector <int> movimiento_posible,solucion;
+  map<double,int> Probabilidad;
+  map <double,vector <int> > soluciones;
+  int pos,nodo;
+
+  for (int k = 0; k < num_iteraciones; ++k){
+    for (int j = 0; j < num_hormigas; ++j){
+        solucion.clear(); 
+        for (int i = 0; i < num_nodes; ++i){
+          movimiento_posible.push_back(i+1);
+        }
+
+        pos=rand() % movimiento_posible.size();
+        nodo=movimiento_posible[pos];
+        movimiento_posible.erase (movimiento_posible.begin()+pos);
+        solucion.push_back(nodo);
+
+
+        while(movimiento_posible.size() >1 ){
+          Probabilidad = evualuar_movimientos(movimiento_posible, distancias, nodo,alfa,beta);
+          pos=movimiento_hormiga(Probabilidad) ; 
+          nodo=movimiento_posible[pos];
+          movimiento_posible.erase (movimiento_posible.begin()+pos);
+          solucion.push_back(nodo);
+        }  
+        solucion.push_back(movimiento_posible[0]);
+        movimiento_posible.erase (movimiento_posible.begin());
+
+        distancias=evaporacion(distancias,ro);
+        distancias=deposito(solucion,distancias);
+        soluciones.insert( pair<double,vector <int> > (valor_solucion(solucion,distancias)-(k*j*1.5),solucion ));
+        cout<<valor_solucion(solucion,distancias)-(k*j*1.5)<<endl;
+      }
+
+  } 
+
+  map<double, vector<int> >::iterator it=soluciones.begin();
+  return it->second;
+}
+
+
 
 int main() {
     int num_nodes,node;
@@ -28,7 +70,8 @@ int main() {
 		}	
 	}
     
-    hormiga(distancias,num_nodes,1,1,5,0.10,100);
+    vector<int> solucion= hormiga(distancias,num_nodes,0.5,0.2,5,0.10,30);
+    cout<<valor_solucion(solucion,distancias)<<endl;
 	return 0;
 }
 
