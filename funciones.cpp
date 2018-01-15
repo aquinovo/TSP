@@ -9,8 +9,6 @@
 #include <queue>
 #include <sys/time.h>
 #include <fstream>
-#include <set>
-#include <algorithm> 
 
 using namespace std;
 
@@ -41,11 +39,11 @@ map<double,int>  evualuar_movimientos(vector <int> movimiento_posible, map< pair
 }
 
 
-int movimiento_hormiga(map<double,int>  Probabilidad){
+int movimiento_hormiga(map<double,int>  Probabilidad, int porcentaje){
   int pos=1;
-  int seleccion= rand () % 5 + 1;
+  int seleccion= rand () % porcentaje + 1;
   map<double, int>::reverse_iterator rit;
-  if(Probabilidad.size() >= 5 )
+  if(Probabilidad.size() >= porcentaje )
     for (rit=Probabilidad.rbegin(); rit!=Probabilidad.rend(); ++rit){
       if(pos<seleccion)
         pos++;
@@ -66,8 +64,8 @@ map< pair<int,int>,  pair<double,double> > evaporacion (map< pair<int,int>,  pai
   return distancias;
 }
 
-double valor_solucion(vector<int>  solucion,map< pair<int,int>,  pair<double,double> > distancias){
-  double valor=0;
+float valor_solucion(vector<int>  solucion,map< pair<int,int>,  pair<double,double> > distancias){
+  float valor=0;
   pair<int,int> relacion_ij;
   for (int i = 0; i < solucion.size(); ++i){
       relacion_ij.first=solucion[i]; relacion_ij.second=solucion[i+1];
